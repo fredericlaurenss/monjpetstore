@@ -13,9 +13,17 @@ pipeline {
     }
 	stage('Publication'){
 		steps {
-			nexusArtifactUploader(nexusVersion : 'nexus3', protocol : 'http',  nexusUrl : 'localhost:8081/', groupId : 'jpetstore', version : '1.0', repository : 'maven-snapshots', credentialsId : 'nexus', artifact : { artifactId : 'jpetstore', type : 'war', classifier : 'debug', file : 'target/jpetstore.war'}
+			nexusArtifactUploader artifacts: [
+				[artifactId: 'jpetstore', classifier: 'debug', file: 'target/jpetstore.war', type: 'war']
+			], 
+		credentialsId: 'nexus', 
+		groupId: 'jpetstore', 
+		nexusUrl: 'localhost:8081/', 
+		nexusVersion: 'nexus3', 
+		protocol: 'http', 
+		repository: 'maven-snapshots', 
+		version: '1.0'
 		  }
-		}
 		}
   }
 }
