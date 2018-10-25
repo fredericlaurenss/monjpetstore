@@ -1,15 +1,14 @@
 pipeline {
   agent any
   stages {
-    stage('prepare') {
+    stage('Récupération des sources') {
       steps {
-        sh 'mvn'
-        sleep(unit: 'MINUTES', time: 10)
+        git(url: 'https://github.com/fredericlaurenss/monjpetstore.git', branch: 'master', credentialsId: 'logingithub')
       }
     }
-    stage('build') {
+    stage('build Maven') {
       steps {
-        sh 'mvn'
+        bat(script: 'runmaven.bat', encoding: 'uft-8')
       }
     }
   }
