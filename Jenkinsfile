@@ -22,7 +22,7 @@ pipeline {
 		nexusVersion: 'nexus3', 
 		protocol: 'http', 
 		repository: 'maven-snapshots', 
-		version: '1.0'
+		version: '1.0-SNAPSHOT'
 		  }
 		}
   }
