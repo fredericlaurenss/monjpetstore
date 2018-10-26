@@ -13,10 +13,18 @@ pipeline {
     }
     stage('qualimetrie') {
       steps {
-        bat(script: 'runqualimetry.bat', encoding: 'utf-8')
-        waitForQualityGate(abortPipeline: true)
+		withSonarQubeEnv('Sonar') {
+			bat(script: 'runqualimetry.bat', encoding: 'utf-8')
+		}
       }
     }
+	stage('quality gate'){
+		steps {
+			timeout(time: 10, unit: 'MINUTES') {
+				waitForQualityGate(abortPipeline: true)
+			}
+		}
+	}
     stage('Publication') {
       steps {
         nexusArtifactUploader(artifacts: [
